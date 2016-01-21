@@ -1,0 +1,249 @@
+<div class="row">
+    <!-- Success and Error Messages for the user --> 
+    <div class="span6 offset2" style="height:50px">
+        <div id="success" class="alert alert-success" style="display:none;">
+            <a class="close">×</a>
+            Well done! Your answer was saved.
+        </div>
+        <div id="loading" class="alert alert-info" style="display:none;">
+            <a class="close">×</a>
+            Loading next task...
+        </div>
+        <div id="taskcompleted" class="alert alert-info" style="display:none;">
+            The task has been finished! Many thanks!
+        </div>
+        <div id="finish" class="alert alert-success" style="display:none;">
+            Congratulations! You have participated on all available tasks!
+            <br/>
+            <div class="alert-actions">
+                <a class="btn small" href="/">Go back</a>
+                <a class="btn small" href="/app">or take a look at other projects</a>
+            </div>
+        </div>
+        <div id="error" class="alert alert-error" style="display:none;">
+            <a class="close">×</a>
+            An error occurred! Please contact the site administrators!
+        </div>
+    </div> <!-- End Success and Error Messages for the user -->
+</div> <!-- End of Row -->
+
+<!-- see http://stackoverflow.com/questions/12121090/responsively-change-div-size-keeping-aspect-ratio -->
+<style>
+.wrapper {
+  width: 100%;
+  display: inline-block;
+  position: relative;
+}
+.wrapper:after {
+  padding-top: 100%;
+  /* 2:1 ratio */
+  display: block;
+  content: '';
+}
+.main {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+}
+
+</style>
+
+<!-- Start Skeleton Row-->
+<div class="row skeleton"> 
+    <!-- Start of Question, Photo and Submission DIV -->
+    <div class="span12">
+        <!-- The question will be loaded here -->
+        <h1 id="question">Can you see settlements or roads in the satellite imagery?</h1>
+        
+        <!-- Photo DIV -->
+		
+        <div class="wrapper" style="background-color:blue">
+            <div class="main" id="leaflet_map" style="background-color:grey"></div>
+        </div>
+        
+        <!-- Start DIV for the submission buttons -->
+        <div id="answer"> 
+            <!-- If the user clicks this button, the saved answer will be value="many"-->
+            <button class="btn btn-success btn-answer" value='Yes' id='Sub_Yes'><i class="icon icon-white icon-thumbs-up"></i>Yes</button>
+            <!-- If the user clicks this button, the saved answer will be value="no"-->
+            <button class="btn btn-danger btn-answer" value='No' id='Sub_No'><i class="icon icon-white icon-thumbs-down"></i>No</button>
+            <!-- If the user clicks this button, the saved answer will be value="NoPhoto"-->
+            <button class="btn btn-inverse btn-answer" value='NoPhoto' id='Sub_NoPhoto'><i class="icon icon-exclamation"></i>No/Bad imagery</button>
+        </div><!-- End of DIV for the submission buttons -->
+              
+        <!-- Feedback items for the user -->
+        <p>You are working on task: <span id="task-id" class="label label-warning">#</span><b>    Completed tasks:</b> <span id="done"></span></b>    <b>Rank:</b> <span id="rank"></span></b></p>
+        <!-- Progress bar for the user -->
+        <!-- <div class="progress progress-striped">
+            <div id="progress" rel="tooltip" title="#" class="bar" style="height: 0%;"></div>
+        </div> -->
+        
+        <!-- Information area that may be expanded -->
+        <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#information">Show/Hide additional information</button>
+    </div><!-- End of Question, Photo and Submission DIV (column) -->
+</div><!-- End of Skeleton Row -->  
+
+<!-- Start of Information DIV -->
+<div class="row">    
+    <div class="span8.offset2, collapse" id="information">
+        <h1>Additional information</h1>
+        <p>Put additional information here<p>
+        <ul>
+            <li><b>Short-cuts</b>: You may use short-cuts in order to speed up the questionare:<br>
+                A or Y for "Yes", W or N for "No", D or B for "No/Bad Imagery"
+			<li><b>Zooming</b>: You may zoom the map by using the mouse-wheel or using <b>+</b> and <b>-</b> keys
+            <li><b>Moving</b>: You may navigate the map by dragging it with the mouse or using the arrow keys.</li>
+        </ul>
+    </div>
+</div><!-- End of Information Row -->
+
+<link rel="stylesheet" href="http://crowdmap.geog.uni-heidelberg.de/uploads/user_3/javascript/leaflet.css" />
+<script src="http://crowdmap.geog.uni-heidelberg.de/uploads/user_3/javascript/leaflet.js"></script>
+<script src='http://crowdmap.geog.uni-heidelberg.de/uploads/user_3/javascript/omnivore.js'></script>
+<script src='http://crowdmap.geog.uni-heidelberg.de/uploads/user_3/javascript/Bing.js'></script>
+
+<script>
+function show_map(wktP){
+    console.log("map should be shown");
+    
+    var wkt = wktP;
+	
+	
+	if (typeof l_map !== 'undefined') {
+    // the variable is defined
+	l_map.remove()
+	}
+    
+	l_map = L.map('leaflet_map', {
+		zoom: 18,
+		minZoom: 12,
+		maxZoom: 19,
+		crs: L.CRS.EPSG3857
+	});
+	
+	L.control.scale().addTo(l_map);
+	
+	var tileLayer = new L.BingLayer('Ak-dzM4wZjSqTlzveKz5u0d4IQ4bRzVI309GxmkgSVr1ewS6iPSrOvOKhA-CJlm3', {type: 'Aerial'});
+	
+	l_map.addLayer(tileLayer);
+	
+	grid_feature = omnivore.wkt.parse(wkt);
+	grid_feature.addTo(l_map);
+	l_map.fitBounds(grid_feature)
+	grid_feature.setStyle({opacity: 0.5, fill: false})
+	
+	
+}
+
+function loadUserProgress() {
+    pybossa.userProgress('your_project_name').done(function(data){
+        var pct = Math.round((data.done*100)/data.total);
+        $("#progress").css("height", pct.toString() +"%");
+        $("#progress").attr("title", pct.toString() + "% completed!");
+        $("#progress").tooltip({'placement': 'left'});
+		
+		var completed = data.done;
+        var rankTitle = "Volunteer";
+
+        if(completed>30 && completed <= 100){
+            rankTitle = "MSF Intern";
+        }
+        else if(completed>100 && completed <= 200){
+            rankTitle = "New FEMA Recruit";
+        }
+        else if(completed>200 && completed <= 400){
+            rankTitle = "UN Humanitarian";
+        }
+        else if(completed>400 && completed <= 600){
+            rankTitle = "Senior UN Official";
+        }
+        else if(completed>600 && completed <= 1000){
+            rankTitle = "UN Country Director";
+        }
+        else if(completed>1000 && completed <= 2000){
+            rankTitle = "Head of UN OCHA";
+        }
+        else if(completed>2000 ){
+            rankTitle = "UN Secretary General";
+        }
+
+         $("#rank").text(rankTitle);
+		 $("#done").text(completed);
+		
+    });
+}
+
+pybossa.taskLoaded(function(task, deferred) {
+    console.log("task was loaded");
+    if (!$.isEmptyObject(task) ) {
+        console.log("task is not empty")
+        console.log(task.info.WKT);
+    }
+    deferred.resolve(task);
+    console.log("taskLoaded done");
+});
+
+pybossa.presentTask(function(task, deferred) {
+    console.log("task should be presented");
+    if (!$.isEmptyObject(task) ) {
+        loadUserProgress();
+        console.log("user progress updated");
+        $('#openlayers_map').empty();
+        console.log("cleared map view");
+		// this will scroll down to the right place, so that we "hide" the heading.
+        window.scroll(0,150);
+           
+		show_map(task.info.WKT, task.info.x_center, task.info.y_center);
+        console.log("created map");
+		
+        $('#task-id').html(task.id);
+        $('.btn-answer').off('click').on('click', function(evt) {
+            var btn = $(this);
+            var answer = btn.attr("value");
+            console.log("clicked button: " + answer);
+            if (typeof answer != 'undefined') {
+                pybossa.saveTask(task.id, answer).done(function() {
+                    deferred.resolve();
+                });
+                $("#loading").fadeIn(500);
+            }
+            else {
+                $("#error").show();
+            }
+        });
+        
+        // establish short-cuts for submission buttons
+        $(document).keydown(function(e) {
+            console.log(e);
+            console.log(e.key);
+            switch (e.key) {
+                case 'a': case 'A': case 'y': case 'Y':
+                    console.log(e.keyKode); $('#Sub_Yes').click();
+                    return false; //"return false" will avoid further events
+                case 'w': case 'W': case 'n': case 'N':
+                    console.log(e.keyKode); $('#Sub_No').click();
+                    return false; //"return false" will avoid further events
+                case 'd': case 'D': case 'b': case 'B':
+                    console.log(e.keyKode); $('#Sub_NoPhoto').click();
+                    return false; //"return false" will avoid further events
+            }
+            return; //using "return" other attached events will execute
+        });
+        
+        $("#loading").hide();
+    }
+    else {
+        $(".skeleton").hide();
+        $("#loading").hide();
+        $("#finish").fadeIn(500);
+    }
+  
+    console.log("presentTask done");
+});
+
+pybossa.run('your_project_name');
+
+
+</script>
