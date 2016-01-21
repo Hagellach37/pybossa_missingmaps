@@ -102,13 +102,13 @@
 
 <!-- Here you should the links to the javascript libraries you are using -->
 <!-- leaflet.css -->
-<link rel="stylesheet" href="https://drive.google.com/file/d/0B_myOH3VCu-KX3NZemdPdzVhRTA/view?usp=sharing" />
+<link rel="stylesheet" href="https://www.dropbox.com/s/zdl2ta4glyt0gan/leaflet.css?dl=1" />
 <!-- leaflet.js -->
-<script src="https://drive.google.com/file/d/0B_myOH3VCu-KVS12a0Q0MlQ2SUk/view?usp=sharing"></script>
+<script src="https://www.dropbox.com/s/9ejsdosgt90m06a/leaflet.js?dl=1"></script>
 <!-- omnivore.js -->
-<script src="https://drive.google.com/file/d/0B_myOH3VCu-KYkNKZUVoLUdkbEk/view?usp=sharing"></script>
+<script src="https://www.dropbox.com/s/3bw4u2iu7kqmtvb/omnivore.js?dl=1"></script>
 <!-- bing.js -->
-<script src="https://drive.google.com/file/d/0B_myOH3VCu-KanV5enFCcEM0a3c/view?usp=sharing"></script>
+<script src="https://www.dropbox.com/s/gtq3d26vjnk1rxh/Bing.js?dl=1"></script>
 
 
 <script>
@@ -132,7 +132,8 @@ function show_map(wktP){
 	
 	L.control.scale().addTo(l_map);
 	
-	var tileLayer = new L.BingLayer('Ak-dzM4wZjSqTlzveKz5u0d4IQ4bRzVI309GxmkgSVr1ewS6iPSrOvOKhA-CJlm3', {type: 'Aerial'});
+	// You should change that access code and get one directly from microsoft, if you would like to use Bing imagery
+	var tileLayer = new L.BingLayer('LfO3DMI9S6GnXD7d0WGs~bq2DRVkmIAzSOFdodzZLvw~Arx8dclDxmZA0Y38tHIJlJfnMbGq5GXeYmrGOUIbS2VLFzRKCK0Yv_bAl6oe-DOc', {type: 'Aerial'});
 	
 	l_map.addLayer(tileLayer);
 	
