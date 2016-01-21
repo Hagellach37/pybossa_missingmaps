@@ -12,7 +12,7 @@ Feel free to use this template for your own project (e.g. at crowdcrafting.org).
 #Design the task presenter
 
 There is a "new" version of the task_presenter.html --> task_presenter_geom.html
-- This templat uses the geometry of your input geometry (e.g. your grid polygon) and will adjust the map view centered on that polygon.
+- This template uses the geometry of your input geometry (e.g. your grid polygon) and will adjust the map view centered on that polygon.
 - replace 'your_project_name' with the shortname of your project at line 149 and line 254.
 
 The template "task_presenter" uses the columns "x_center" and "y_center" to set the center of your map view.
