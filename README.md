@@ -1,9 +1,10 @@
 # pybossa_missingmaps
 This is a template for the Missing Maps pybossa task. Have a look and contribute: 
 
-http://crowdmap.geog.uni-heidelberg.de/app/missing_maps_follow_up/
+- http://crowdmap.geog.uni-heidelberg.de/app/missing_maps_follow_up/
+
 You can find additional information how to create such a task also at this blogpost:
-https://disastermappers.wordpress.com/2015/09/23/how-to-create-your-own-missing-maps-like-pybossa-task/
+- https://disastermappers.wordpress.com/2015/09/23/how-to-create-your-own-missing-maps-like-pybossa-task/
 
 Feel free to use this template for your own project (e.g. at crowdcrafting.org).
 
