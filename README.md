@@ -9,6 +9,7 @@ You can find additional information how to create such a task also at this blogp
 
 Feel free to use this template for your own project (e.g. at crowdcrafting.org).
 
+#Design the task presenter
 
 There is a "new" version of the task_presenter.html --> task_presenter_geom.html
 - This templat uses the geometry of your input geometry (e.g. your grid polygon) and will adjust the map view centered on that polygon.
@@ -19,4 +20,8 @@ The template "task_presenter" uses the columns "x_center" and "y_center" to set 
 
 
 The shortname of your project is the one that is also displayed in the weblink to your project. (e.g. https://crowdcrafting.org/project/test_project/tasks/) --> "test_project")
+
+#Further issues:
+- You should consider to get an access key from microsoft if you would like to use Bing imagery.
+- you may have to change the links to the javascript libraries
 
