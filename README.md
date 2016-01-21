@@ -14,7 +14,7 @@ There is a "new" version of the task_presenter.html --> task_presenter_geom.html
 - This templat uses the geometry of your input geometry (e.g. your grid polygon) and will adjust the map view centered on that polygon.
 - replace 'your_project_name' with the shortname of your project at line 141 and line 246.
 
-The template "task_presenter_center" uses the columns "x_center" and "y_center" to set the center of your map view.
+The template "task_presenter" uses the columns "x_center" and "y_center" to set the center of your map view.
 - replace 'your_project_name' with the shortname of your project at line 140 and line 216.
 
 
