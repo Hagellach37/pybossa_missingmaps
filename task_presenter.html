@@ -100,11 +100,15 @@
     </div>
 </div><!-- End of Information Row -->
 
-<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.5/leaflet.css" />
-<script src="http://cdn.leafletjs.com/leaflet-0.7.5/leaflet.js"></script>
-<script src='//api.tiles.mapbox.com/mapbox.js/plugins/leaflet-omnivore/v0.2.0/leaflet-omnivore.min.js'></script>
-<script src='http://crowdmap.geog.uni-heidelberg.de/uploads/user_3/Bing.js'></script>
-
+<!-- Here you should the links to the javascript libraries you are using -->
+<!-- leaflet.css -->
+<link rel="stylesheet" href="https://www.dropbox.com/s/zdl2ta4glyt0gan/leaflet.css?dl=1" />
+<!-- leaflet.js -->
+<script src="https://www.dropbox.com/s/9ejsdosgt90m06a/leaflet.js?dl=1"></script>
+<!-- omnivore.js -->
+<script src="https://www.dropbox.com/s/3bw4u2iu7kqmtvb/omnivore.js?dl=1"></script>
+<!-- bing.js -->
+<script src="https://www.dropbox.com/s/gtq3d26vjnk1rxh/Bing.js?dl=1"></script>
 <script>
 function show_map(wktP,X,Y){
     console.log("map should be shown");
@@ -128,6 +132,7 @@ function show_map(wktP,X,Y){
 	
 	L.control.scale().addTo(l_map);
 	
+	// You should change that access code and get one directly from microsoft, if you would like to use Bing imagery
 	var tileLayer = new L.BingLayer('LfO3DMI9S6GnXD7d0WGs~bq2DRVkmIAzSOFdodzZLvw~Arx8dclDxmZA0Y38tHIJlJfnMbGq5GXeYmrGOUIbS2VLFzRKCK0Yv_bAl6oe-DOc', {type: 'Aerial'});
 	
 	l_map.addLayer(tileLayer);
